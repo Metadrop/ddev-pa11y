@@ -5,10 +5,11 @@
 * [What is DDEV Pa11y Add-on?](#what-is-ddev-pa11y-add-on)
 * [Components of the repository](#components-of-the-repository)
 * [Getting started](#getting-started)
-* [How to debug in Github Actions](#how-to-debug-tests-github-actions)
 
 ## What is DDEV Pa11y Add-on?
 This repository provides a [DDEV](https://ddev.readthedocs.io) add-on for the Pa11y service. Pa11y is an automated accessibility testing tool that helps developers make their web applications more accessible.
+
+This is optimized for [Aljibe projects](https://github.com/Metadrop/Aljibe/), but can be used in any DDEV project.
 
 In DDEV, addons can be installed from the command line using the `ddev get` command, for example, `ddev get Metadrop/ddev-pa11y`.
 
@@ -25,4 +26,4 @@ In DDEV, addons can be installed from the command line using the `ddev get` comm
 2. Start the DDEV project with `ddev start` or `ddev restart`if already started.
 3. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
 
-4. **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
+**Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
