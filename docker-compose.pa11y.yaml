@@ -6,7 +6,6 @@ services:
     networks: [default, ddev_default]
     restart: "no"
     command: sleep infinity
-    # user: '$DDEV_UID:$DDEV_GID'
     entrypoint: [ "docker-entrypoint.sh" ]
     # These labels ensure this service is discoverable by ddev.
     labels:
