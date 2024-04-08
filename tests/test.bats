@@ -12,7 +12,7 @@ setup() {
 }
 
 health_checks() {
-  output = ddev pa11y --help
+  output=$(ddev pa11y --help)
   # Check if the output contains "Healthcheck passed!"
   [[ $output == *"Usage: pa11y"* ]]
 }
@@ -36,8 +36,8 @@ teardown() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get ddev/ddev-addon-template with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ddev/ddev-addon-template
+  echo "# ddev get Metadrop/ddev-pa11y with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get Metadrop/ddev-pa11y
   ddev restart >/dev/null
   health_checks
 }
