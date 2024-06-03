@@ -1,4 +1,4 @@
-name: ddev-pa11y
+name: pa11y
 
 project_files:
 - docker-compose.pa11y.yaml
