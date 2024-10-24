@@ -23,19 +23,19 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 
 ## Getting started
 
-Install the Pa11y service in your DDEV project.
+1. Install the Pa11y service in your DDEV project.
 
-For DDEV v1.23.5 or above run
+    For DDEV v1.23.5 or above run
 
-```sh
-ddev add-on get Metadrop/ddev-pa11y
-```
+    ```sh
+    ddev add-on get Metadrop/ddev-pa11y
+    ```
 
-For earlier versions of DDEV run
+    For earlier versions of DDEV run
 
-```sh
-ddev get Metadrop/ddev-pa11y
-```
+    ```sh
+    ddev get Metadrop/ddev-pa11y
+    ```
 
 1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
 1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
