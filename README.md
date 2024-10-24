@@ -12,7 +12,7 @@ This repository provides a [DDEV](https://ddev.readthedocs.io) add-on for the Pa
 
 This is optimized for [Aljibe projects](https://github.com/Metadrop/Aljibe/), but can be used in any DDEV project.
 
-In DDEV, addons can be installed from the command line using the `ddev get` command, for example, `ddev get Metadrop/ddev-pa11y`.
+In DDEV, addons can be installed from the command line using the `ddev add-on get` command, for example, `ddev add-on get Metadrop/ddev-pa11y`.
 
 ## Components of the repository
 
@@ -23,8 +23,21 @@ In DDEV, addons can be installed from the command line using the `ddev get` comm
 
 ## Getting started
 
-1. Install the Pa11y service in your DDEV project by running `ddev get Metadrop/ddev-pa11y`.
-2. Start the DDEV project with `ddev start` or `ddev restart`if already started.
-3. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
+Install the Pa11y service in your DDEV project.
+
+For DDEV v1.23.5 or above run
+
+```sh
+ddev add-on get Metadrop/ddev-pa11y
+```
+
+For earlier versions of DDEV run
+
+```sh
+ddev get Metadrop/ddev-pa11y
+```
+
+1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
+1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
 
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
