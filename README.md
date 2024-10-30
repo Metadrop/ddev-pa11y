@@ -46,13 +46,11 @@ The Pa11y configuration can be customized by creating a custom .json file inside
 
 ```json
 {
-  "chromeLaunchConfig": {
-    "args": ["--no-sandbox", "--ignore-ssl-errors=true"]
-  },
-  "standard": "WCAG2AA",
-  "timeout": 30000,
-  "wait": 5000,
-  "hideElements": "body > *:not(.skip-a11y)",
+   "chromeLaunchConfig": {
+      "args": ["--no-sandbox"],
+      "ignoreHTTPSErrors": true
+   }, 
+  "hideElements": ".skip-a11y",
   "ignore": [
     "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
   ]
