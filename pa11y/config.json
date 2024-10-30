@@ -1,0 +1,7 @@
+{
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox", "--ignore-ssl-errors=true"]
+  },
+  "hideElements": "body > *:not(.skip-a11y)",
+  "ignore": []
+}

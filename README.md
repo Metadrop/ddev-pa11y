@@ -40,4 +40,26 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
 1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
 
+## Customizing the Pa11y configuration
+
+The Pa11y configuration can be customized by creating a custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content: 
+
+```json
+{
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox", "--ignore-ssl-errors=true"]
+  },
+  "standard": "WCAG2AA",
+  "timeout": 30000,
+  "wait": 5000,
+  "hideElements": "body > *:not(.skip-a11y)",
+  "ignore": [
+    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
+  ]
+}
+```
+To use this config file, you can run the Pa11y service with the following command: 
+`ddev pa11y http://example.com --config=/tests/pa11y/config.json --reporter=junit`.
+
+
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**

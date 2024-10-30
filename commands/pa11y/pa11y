@@ -1,11 +1,20 @@
 #!/bin/sh
-
 #ddev-generated
-
-## Description: Run pa11y
-## Usage: pa11y [args]
-## Example: "ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A"
+## Description: Run pa11y on given environment
+## Usage: pa11y env [args]
+## Example: "ddev pa11y pro https://example.com"
 ## ExecRaw: true
+
+# if $1 is not set assume "local" environment
+if [ -z "$1" ]; then
+  echo "No environment set, assuming 'local'"
+  shift
+  set -- "local" "$@"
+fi
+
+# if $1 folder exists in tests/pa11y, use it. If not give an error
+
+
+# Run pa11y with the given arguments
+
 NODE_PATH="/app/node_modules/" /app/node_modules/.bin/pa11y -c /app/config/config.json "$@"
-
-

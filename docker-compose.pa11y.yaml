@@ -2,16 +2,17 @@
 services:
   pa11y:
     container_name: ddev-${DDEV_SITENAME}-pa11y
-    image: metadrop/docker-pa11y
+    image: metadrop/docker-pa11y:latest
     networks: [default, ddev_default]
     restart: "no"
     command: sleep infinity
-    entrypoint: [ "docker-entrypoint.sh" ]
+    entrypoint: ["docker-entrypoint.sh"]
     external_links:
       - web:${DDEV_SITENAME}.${DDEV_TLD}
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     volumes:
-    - .:/mnt/ddev_config:ro
-    - "ddev-global-cache:/mnt/ddev-global-cache"
+      - ${DDEV_APPROOT}/${PA11Y_CONFIG_FILE_PATH:-tests/pa11y/config.json}:/app/config/config.json
+      - .:/mnt/ddev_config:ro
+      - "ddev-global-cache:/mnt/ddev-global-cache"
