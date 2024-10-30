@@ -42,7 +42,7 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 
 ## Customizing the Pa11y configuration
 
-The Pa11y configuration can be customized by creating a custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content: 
+The Pa11y configuration can be customized by update the custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content: 
 
 ```json
 {
@@ -58,6 +58,5 @@ The Pa11y configuration can be customized by creating a custom .json file inside
 ```
 To use this config file, you can run the Pa11y service with the following command: 
 `ddev pa11y http://example.com --config=/tests/pa11y/config.json --reporter=junit`.
-
 
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
