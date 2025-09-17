@@ -1,4 +1,4 @@
-[![tests](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
+[![tests](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
 ![GitHub Release](https://img.shields.io/github/v/release/Metadrop/ddev-pa11y)
 
 # DDEV Pa11y Add-on <!-- omit in toc -->
@@ -42,21 +42,21 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 
 ## Customizing the Pa11y configuration
 
-The Pa11y configuration can be customized by update the custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content: 
+The Pa11y configuration can be customized by update the custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content:
 
 ```json
 {
    "chromeLaunchConfig": {
       "args": ["--no-sandbox"],
       "ignoreHTTPSErrors": true
-   }, 
+   },
   "hideElements": ".skip-a11y",
   "ignore": [
     "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
   ]
 }
 ```
-To use this config file, you can run the Pa11y service with the following command: 
+To use this config file, you can run the Pa11y service with the following command:
 `ddev pa11y http://example.com --config=/tests/pa11y/config.json --reporter=junit`.
 
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
