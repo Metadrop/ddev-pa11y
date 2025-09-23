@@ -46,17 +46,20 @@ The Pa11y configuration can be customized by update the custom .json file inside
 
 ```json
 {
-   "chromeLaunchConfig": {
-      "args": ["--no-sandbox"],
-      "ignoreHTTPSErrors": true
-   },
-  "hideElements": ".skip-a11y",
-  "ignore": [
-    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
-  ]
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"],
+    "ignoreHTTPSErrors": true
+  },
+  "hideElements": ".skip-pa11y",
+  "ignore": [],
+  "screenCapture": "config/pa11y.png",
+  "reporter": "cli",
+  "runner": ["axe", "htmlcs"]
 }
 ```
 To use this config file, you can run the Pa11y service with the following command:
-`ddev pa11y http://example.com --config=/tests/pa11y/config.json --reporter=junit`.
+```
+ddev pa11y http://example.com --config=config/config.json
+```
 
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
