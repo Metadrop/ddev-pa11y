@@ -62,4 +62,24 @@ To use this config file, you can run the Pa11y service with the following comman
 ddev pa11y http://example.com --config=config/config.json
 ```
 
+**NOTE:**
+The default `config.json` file and URL are **picked by default**, so to test the homepage
+you can run just:
+
+```
+ddev pa11y
+```
+
+which equals to:
+
+```
+ddev pa11y https://web --config=config/config.json
+```
+
+or
+
+```
+ddev pa11y https://example.com
+```
+
 **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
