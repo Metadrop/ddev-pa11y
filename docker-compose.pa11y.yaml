@@ -2,7 +2,14 @@
 services:
   pa11y:
     container_name: ddev-${DDEV_SITENAME}-pa11y
-    image: metadrop/docker-pa11y:latest
+    build:
+      context: './pa11yBuild'
+      args:
+        BASE_IMAGE: 'metadrop/docker-pa11y:latest'
+        username: $USER
+        uid: $DDEV_UID
+        gid: $DDEV_GID
+    image: dcycle/pa11y:2
     networks: [default, ddev_default]
     restart: "no"
     command: sleep infinity
