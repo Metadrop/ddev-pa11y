@@ -99,6 +99,36 @@ Simply add them in your `config.json`:
 ```
 Please consult [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#configuration) to discover more.
 
+## pa11y-ci
+
+This add-on includes [`pa11y-ci`](https://github.com/pa11y/pa11y-ci) which allows you to automatically test a list of
+provided URLs.
+
+The configuration file is different from `pa11y` command above and has a slightly different syntax.
+Please refer to `ci-config.json` and adjust as needed.
+
+Sample `pa11y-ci` configuration file:
+
+```json
+{
+    "default": {
+        "chromeLaunchConfig": {
+            "args": [
+                "--no-sandbox"
+            ],
+            "ignoreHTTPSErrors": true
+        },
+        "hideElements": ".skip-pa11y",
+        "ignore": []
+    },
+    "urls": [
+        "http://web",
+        "http://web/about"
+    ]
+}
+```
+
 ## Credits
 
 - **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
+- **pa11y-ci contributed by [Annertech](https://www.annertech.com) and [Bill Seremetis](https://www.drupal.org/u/bserem)**

@@ -1,10 +1,9 @@
 #!/bin/sh
 #ddev-generated
 ## Description: Run pa11y-ci on given environment
-## Usage: pa11y-ci URL [Pa11y options]
-## Example:\n- Run Pa11y on the default URL with no options:\n\n    ddev pa11y\n\n- Run Pa11y on a given URL\n\n    ddev pa11y https://example.com/page1\n\n- Run Pa11y in a given URL with a 500 milliseconds timeout:\n\n    ddev pa11y https://example.com/page2 -t 500\n\n- See all available Pa11y options:\n\n    ddev pa11y -h\n    ddev pa11y --help\n\nSee Pa11y documentation at https://github.com/pa11y/pa11y\n\nNOTE: Although [flags] is displayed in the `Usage` section, meaning DDEV flags, please do not use them as they will be also passed to Pa11y and may cause errors.
+## Usage: pa11y-ci
+## Example: ddev pa11y-ci
 ## ExecRaw: true
 
 # Run pa11y with the URL and remaining parameters
-NODE_PATH="/app/node_modules/" /app/node_modules/.bin/pa11y-ci -c /app/config/.pa11yci
-#  -c /app/config/config.json "$url" "$@"
+NODE_PATH="/app/node_modules/" /app/node_modules/.bin/pa11y-ci -c /app/config/ci-config.json
