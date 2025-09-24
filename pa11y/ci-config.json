@@ -7,7 +7,7 @@
             "ignoreHTTPSErrors": true
         },
         "hideElements": ".skip-pa11y",
-  "ignore": []
+    "ignore": []
     },
     "urls": [
         "http://web",
