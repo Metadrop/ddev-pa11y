@@ -40,23 +40,95 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
 1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
 
-## Customizing the Pa11y configuration
+## Using a Config File
 
-The Pa11y configuration can be customized by update the custom .json file inside tests/pa11y folder. For example, you can create a file called `tests/pa11y/config.json` with the following content:
+The Pa11y configuration can be customized config files (`json`). For example, you can edit the provided file under `tests/pa11y/config.json` with the following content:
 
 ```json
 {
-   "chromeLaunchConfig": {
-      "args": ["--no-sandbox"],
-      "ignoreHTTPSErrors": true
-   },
-  "hideElements": ".skip-a11y",
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"],
+    "ignoreHTTPSErrors": true
+  },
+  "hideElements": ".skip-pa11y",
   "ignore": [
     "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
-  ]
+  ],
 }
 ```
-To use this config file, you can run the Pa11y service with the following command:
-`ddev pa11y http://example.com --config=/tests/pa11y/config.json --reporter=junit`.
 
-**Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
+To use this config file, you can run the Pa11y service with the following command:
+
+```
+ddev pa11y http://example.com --config=config/config.json
+```
+
+**NOTE:**
+The default `config.json` file and URL are **picked by default**
+
+| Short command                    | Equals to                                                    |
+| -------------------------------- | ------------------------------------------------------------ |
+| `ddev pa11y`                     | `ddev pa11y https://web --config=config/config.json`         |
+| `ddev pa11y https://example.com` | `ddev pa11y https://example.com --config=config/config.json` |
+
+### Advanced Config file Customizations
+
+Several options available in the `pa11y` command can be configured in the config file, like:
+
+- `screenCapture`
+- `reporter`
+- `runner`
+
+Simply add them in your `config.json`:
+
+
+```json
+{
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"],
+    "ignoreHTTPSErrors": true
+  },
+  "hideElements": ".skip-pa11y",
+  "ignore": [
+    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
+  ],
+  "screenCapture": "config/pa11y.png",
+  "reporter": "cli",
+  "runner": ["axe", "htmlcs"]
+}
+```
+Please consult [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#configuration) to discover more.
+
+## pa11y-ci
+
+This add-on includes [`pa11y-ci`](https://github.com/pa11y/pa11y-ci) which allows you to automatically test a list of
+provided URLs.
+
+The configuration file is different from `pa11y` command above and has a slightly different syntax.
+Please refer to `ci-config.json` and adjust as needed.
+
+Sample `pa11y-ci` configuration file:
+
+```json
+{
+    "default": {
+        "chromeLaunchConfig": {
+            "args": [
+                "--no-sandbox"
+            ],
+            "ignoreHTTPSErrors": true
+        },
+        "hideElements": ".skip-pa11y",
+        "ignore": []
+    },
+    "urls": [
+        "http://web",
+        "http://web/about"
+    ]
+}
+```
+
+## Credits
+
+- **Contributed and maintained by [@Metadrop](https://github.com/Metadrop)**
+- **pa11y-ci contributed by [Annertech](https://www.annertech.com) and [Bill Seremetis](https://www.drupal.org/u/bserem)**

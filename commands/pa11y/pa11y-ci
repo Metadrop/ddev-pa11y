@@ -1,0 +1,9 @@
+#!/bin/sh
+#ddev-generated
+## Description: Run pa11y-ci on given environment
+## Usage: pa11y-ci
+## Example: ddev pa11y-ci
+## ExecRaw: true
+
+# Run pa11y with the URL and remaining parameters
+NODE_PATH="/app/node_modules/" /app/node_modules/.bin/pa11y-ci -c /app/config/ci-config.json

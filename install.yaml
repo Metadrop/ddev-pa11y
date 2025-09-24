@@ -2,12 +2,13 @@ name: pa11y
 
 project_files:
   - docker-compose.pa11y.yaml
-  - commands
+  - commands/pa11y
   - pa11y
+  - pa11yBuild
 
 post_install_actions:
   - echo "Post install started..."
   - echo "Creating tests folders"
   - test -d ${DDEV_APPROOT}/tests/pa11y || mkdir -p ${DDEV_APPROOT}/tests/pa11y
-  - test -f ${DDEV_APPROOT}/tests/pa11y/config.json || cp pa11y/config.json ${DDEV_APPROOT}/tests/pa11y/config.json
+  - test -f ${DDEV_APPROOT}/tests/pa11y/config.json || cp pa11y/* ${DDEV_APPROOT}/tests/pa11y/
   - echo "Install finished."
