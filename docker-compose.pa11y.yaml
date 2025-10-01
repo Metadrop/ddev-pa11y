@@ -13,6 +13,6 @@ services:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     volumes:
-      - ${DDEV_APPROOT}/${PA11Y_CONFIG_FILE_PATH:-tests/pa11y/config.json}:/app/config/config.json
+      - ${DDEV_APPROOT}/${PA11Y_CONFIG_PATH:-tests/pa11y/}:/app/config/
       - .:/mnt/ddev_config:ro
       - "ddev-global-cache:/mnt/ddev-global-cache"
