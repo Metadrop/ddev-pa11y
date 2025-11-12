@@ -49,7 +49,7 @@ check_runs_successfully() {
 
   run ddev pa11y
   assert_output --partial "No URL passed, assuming 'https://web'"
-  assert_output --partial "Running Pa11y on URL https://web"s
+  assert_output --partial "Running Pa11y on URL https://web"
 
   # Because the web container is empty Pa11y will analyse the Nginx forbidden
   # page that has issues so we expect to for the command to fail.
