@@ -1,13 +1,13 @@
 [![tests](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
 ![GitHub Release](https://img.shields.io/github/v/release/Metadrop/ddev-pa11y)
 
-# DDEV Pa11y Add-on <!-- omit in toc -->
+# DDEV Pa11y add-on <!-- omit in toc -->
 
-* [What is DDEV Pa11y Add-on?](#what-is-ddev-pa11y-add-on)
+* [What is DDEV Pa11y add-on?](#what-is-ddev-pa11y-add-on)
 * [Components of the repository](#components-of-the-repository)
 * [Getting started](#getting-started)
 
-## What is DDEV Pa11y Add-on?
+## What is DDEV Pa11y add-on?
 This repository provides a [DDEV](https://ddev.readthedocs.io) add-on for the Pa11y service. Pa11y is an automated accessibility testing tool that helps developers make their web applications more accessible.
 
 This is optimized for [Aljibe projects](https://github.com/Metadrop/Aljibe/), but can be used in any DDEV project.
@@ -40,9 +40,9 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
 1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
 
-## Using a Config File
+## Using a config file
 
-The Pa11y configuration can be customized config files (`json`). For example, you can edit the provided file under `tests/pa11y/config.json` with the following content:
+The Pa11y configuration can be customised using config files (`json`). For example, you can edit the provided file under `tests/pa11y/config.json` with the following content:
 
 ```json
 {
@@ -71,7 +71,7 @@ The default `config.json` file and URL are **picked by default**
 | `ddev pa11y`                     | `ddev pa11y https://web --config=config/config.json`         |
 | `ddev pa11y https://example.com` | `ddev pa11y https://example.com --config=config/config.json` |
 
-### Advanced Config file Customizations
+### Advanced config file customisations
 
 Several options available in the `pa11y` command can be configured in the config file, like:
 
