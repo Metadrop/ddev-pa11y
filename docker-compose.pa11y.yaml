@@ -7,8 +7,6 @@ services:
     restart: "no"
     command: sleep infinity
     entrypoint: ["docker-entrypoint.sh"]
-    external_links:
-      - web:${DDEV_SITENAME}.${DDEV_TLD}
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
