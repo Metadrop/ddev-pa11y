@@ -8,7 +8,7 @@
 FOLDER=$(date +%Y%m%d_%H%M%S)
 
 REPORT_DIR="/home/aljibe/reports/$FOLDER"
-TMP=$(mktemp /tmp/pa11yci-XXXXXX.json)
+TMP=$(mktemp /tmp/pa11yci-tmp.json)
 
 node -e "
   const fs = require('fs');

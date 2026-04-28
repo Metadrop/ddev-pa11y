@@ -42,34 +42,20 @@ In DDEV, addons can be installed from the command line using the `ddev add-on ge
 
 ## Using a config file
 
-The Pa11y configuration can be customised using config files (`json`). For example, you can edit the provided file under `tests/pa11y/config.json` with the following content:
+The Pa11y configuration can be customised using the config file at `tests/pa11y/config.json`. The config is automatically used by all `ddev pa11y` commands. Example content:
 
 ```json
 {
   "chromeLaunchConfig": {
-    "args": ["--no-sandbox"],
-    "ignoreHTTPSErrors": true
+    "args": ["--no-sandbox"]
   },
+  "ignoreHTTPSErrors": true,
   "hideElements": ".skip-pa11y",
   "ignore": [
     "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
-  ],
+  ]
 }
 ```
-
-To use this config file, you can run the Pa11y service with the following command:
-
-```
-ddev pa11y http://example.com --config=config/config.json
-```
-
-**NOTE:**
-The default `config.json` file and URL are **picked by default**
-
-| Short command                    | Equals to                                                    |
-| -------------------------------- | ------------------------------------------------------------ |
-| `ddev pa11y`                     | `ddev pa11y https://web --config=config/config.json`         |
-| `ddev pa11y https://example.com` | `ddev pa11y https://example.com --config=config/config.json` |
 
 ### Advanced config file customisations
 
@@ -81,13 +67,12 @@ Several options available in the `pa11y` command can be configured in the config
 
 Simply add them in your `config.json`:
 
-
 ```json
 {
   "chromeLaunchConfig": {
-    "args": ["--no-sandbox"],
-    "ignoreHTTPSErrors": true
+    "args": ["--no-sandbox"]
   },
+  "ignoreHTTPSErrors": true,
   "hideElements": ".skip-pa11y",
   "ignore": [
     "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
@@ -97,6 +82,7 @@ Simply add them in your `config.json`:
   "runner": ["axe", "htmlcs"]
 }
 ```
+
 Please consult [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#configuration) to discover more.
 
 ## Credits

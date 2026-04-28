@@ -47,8 +47,7 @@ health_checks() {
 
 check_runs_successfully() {
 
-  run ddev pa11y
-  assert_output --partial "No URL passed, assuming 'https://web'"
+  run ddev pa11y https://web
   assert_output --partial "Running Pa11y on URL https://web"
 
   # Because the web container is empty Pa11y will analyse the Nginx forbidden
