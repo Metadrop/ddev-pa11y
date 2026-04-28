@@ -5,12 +5,15 @@ services:
     image: ghcr.io/metadrop/aljibe-tools/pa11y:latest
     networks: [default, ddev_default]
     restart: "no"
-    command: sleep infinity
+    command: sh -c "serve /home/aljibe/reports -p 9003 --no-clipboard 2>/dev/null & sleep infinity"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     environment:
       NODE_EXTRA_CA_CERTS: /mnt/ddev-global-cache/mkcert/rootCA.pem
+      VIRTUAL_HOST: $DDEV_HOSTNAME
+      HTTP_EXPOSE: 9002:9038
+      HTTPS_EXPOSE: 9003:9038
     volumes:
       - ${DDEV_APPROOT}/${PA11Y_CONFIG_FILE_PATH:-tests/pa11y/config.json}:/home/aljibe/config.json
       - ${DDEV_APPROOT}/${PA11Y_CI_CONFIG_FILE_PATH:-tests/pa11y/pa11yci.json}:/home/aljibe/pa11yci.json
