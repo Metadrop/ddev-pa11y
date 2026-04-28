@@ -9,5 +9,7 @@ post_install_actions:
   - echo "Post install started..."
   - echo "Creating tests folders"
   - test -d ${DDEV_APPROOT}/tests/pa11y || mkdir -p ${DDEV_APPROOT}/tests/pa11y
+  - test -d ${DDEV_APPROOT}/reports/pa11y || mkdir -p ${DDEV_APPROOT}/reports/pa11y
   - test -f ${DDEV_APPROOT}/tests/pa11y/config.json || cp pa11y/config.json ${DDEV_APPROOT}/tests/pa11y/config.json
+  - test -f ${DDEV_APPROOT}/tests/pa11y/pa11yci.json || cp pa11y/pa11yci.json ${DDEV_APPROOT}/tests/pa11y/pa11yci.json
   - echo "Install finished."

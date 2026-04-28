@@ -1,0 +1,8 @@
+#!/bin/sh
+#ddev-generated
+## Description: Run pa11y-ci
+## Usage: pa11y-ci [args]
+## Example: "ddev pa11y-ci https://example.com"
+## ExecRaw: true
+
+pa11y-ci -c /home/aljibe/pa11yci.json "$@"
