@@ -5,7 +5,7 @@
 ## Example: "ddev pa11y local https://example.com" or "ddev pa11y https://example.com"
 ## ExecRaw: true
 
-PA11Y_TESTS_PATH="/home/aljibe/tests"
+PA11Y_TESTS_PATH="/src/tests"
 
 if [ -z "$1" ]; then
   echo "Usage: ddev pa11y <environment|url> [args]"
@@ -24,5 +24,5 @@ if [ -d "$PA11Y_TESTS_PATH/$1" ] && [ -f "$PA11Y_TESTS_PATH/$1/config.json" ]; t
   shift
   pa11y -c "$PA11Y_TESTS_PATH/$ENV/config.json" "$@"
 else
-  pa11y -c /home/aljibe/config.json "$@"
+  pa11y -c /src/config.json "$@"
 fi

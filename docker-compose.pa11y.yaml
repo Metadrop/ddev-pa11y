@@ -2,11 +2,20 @@
 services:
   pa11y:
     container_name: ddev-${DDEV_SITENAME}-pa11y
-    image: ghcr.io/metadrop/aljibe-tools/pa11y:latest
-    user: "${DDEV_UID}:${DDEV_GID}"
+    build:
+      context: './pa11yBuild'
+      args:
+        BASE_IMAGE: ghcr.io/metadrop/aljibe-tools/pa11y:latest
+        username: $USER
+        uid: $DDEV_UID
+        gid: $DDEV_GID
+    image: ghcr.io/metadrop/aljibe-tools/pa11y:latest-${DDEV_SITENAME}-built
+    user: '$DDEV_UID:$DDEV_GID'
     networks: [default, ddev_default]
     restart: "no"
-    command: sh -c "serve /home/aljibe/reports -p 9003 --no-clipboard 2>/dev/null & sleep infinity"
+    init: true
+    shm_size: 1gb
+    command: sh -c "serve /src/reports -p 9003 --no-clipboard 2>/dev/null & sleep infinity"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
@@ -16,9 +25,7 @@ services:
       HTTP_EXPOSE: 9202:9002
       HTTPS_EXPOSE: 9203:9003
     volumes:
-      - ${DDEV_APPROOT}/${PA11Y_TESTS_DIR:-tests/pa11y}:/home/aljibe/tests
-      - ${DDEV_APPROOT}/${PA11Y_DEFAULT_CONFIG_FILE_PATH:-.ddev/pa11y/config.json}:/home/aljibe/config.json
-      - ${DDEV_APPROOT}/${PA11Y_DEFAULT_CI_CONFIG_FILE_PATH:-.ddev/pa11y/pa11yci.json}:/home/aljibe/.pa11yci.json
-      - ${DDEV_APPROOT}/${PA11Y_REPORTS_PATH:-reports/pa11y}:/home/aljibe/reports
+      - ${DDEV_APPROOT}/${PA11Y_TESTS_DIR:-tests/pa11y}:/src/tests
+      - ${DDEV_APPROOT}/${PA11Y_REPORTS_PATH:-reports/pa11y}:/src/reports
       - .:/mnt/ddev_config:ro
       - "ddev-global-cache:/mnt/ddev-global-cache"

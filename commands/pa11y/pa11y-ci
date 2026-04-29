@@ -5,7 +5,7 @@
 ## Example: "ddev pa11y-ci local" or "ddev pa11y-ci https://example.com"
 ## ExecRaw: true
 
-PA11Y_TESTS_PATH="/home/aljibe/tests"
+PA11Y_TESTS_PATH="/src/tests"
 DEFAULT_ENV="${PA11Y_DEFAULT_ENV:-local}"
 
 ENV="${1:-$DEFAULT_ENV}"

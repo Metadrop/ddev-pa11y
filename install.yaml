@@ -4,6 +4,7 @@ project_files:
   - docker-compose.pa11y.yaml
   - commands
   - pa11y
+  - pa11yBuild
 
 post_install_actions:
   - echo "Post install started..."
