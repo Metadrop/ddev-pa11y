@@ -1,18 +1,41 @@
 #!/bin/sh
 #ddev-generated
-## Description: Run pa11y-ci and generate an HTML report in reports/<url>/
-## Usage: pa11y-ci-report [args]
-## Example: "ddev pa11y-ci-report https://example.com"
+## Description: Run pa11y-ci and generate an HTML report in reports/<timestamp>/
+## Usage: pa11y-ci-report [environment|url] [args]
+## Example: "ddev pa11y-ci-report local" or "ddev pa11y-ci-report https://example.com"
 ## ExecRaw: true
 
-FOLDER=$(date +%Y%m%d_%H%M%S)
+PA11Y_TESTS_PATH="/home/aljibe/tests"
 
+if [ -z "$1" ]; then
+  echo "Usage: ddev pa11y-ci-report <environment|url> [args]"
+  echo "  environment: folder name inside tests/pa11y/ containing pa11yci.json"
+  echo "  url: URL to test directly"
+  echo ""
+  echo "Available environments:"
+  find "$PA11Y_TESTS_PATH" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -I{} basename {}
+  echo ""
+  pa11y-ci
+  exit 0
+fi
+
+FOLDER=$(date +%Y%m%d_%H%M%S)
 REPORT_DIR="/home/aljibe/reports/$FOLDER"
-TMP=$(mktemp /tmp/pa11yci-tmp.json)
+
+if [ -d "$PA11Y_TESTS_PATH/$1" ] && [ -f "$PA11Y_TESTS_PATH/$1/pa11yci.json" ]; then
+  ENV=$1
+  shift
+  CONFIG_FILE="$PA11Y_TESTS_PATH/$ENV/pa11yci.json"
+else
+  CONFIG_FILE="/home/aljibe/pa11yci.json"
+fi
+
+TMP=$(mktemp /tmp/pa11yci-XXXXXX.json)
 
 node -e "
   const fs = require('fs');
-  const cfg = JSON.parse(fs.readFileSync('/home/aljibe/pa11yci.json', 'utf8'));
+  const cfg = JSON.parse(fs.readFileSync('$CONFIG_FILE', 'utf8'));
+  cfg.defaults = cfg.defaults || {};
   cfg.defaults.reporters = [['pa11y-ci-reporter-html', { destination: '$REPORT_DIR' }]];
   fs.writeFileSync('$TMP', JSON.stringify(cfg));
 "
