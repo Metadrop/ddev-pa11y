@@ -3,6 +3,7 @@ services:
   pa11y:
     container_name: ddev-${DDEV_SITENAME}-pa11y
     image: ghcr.io/metadrop/aljibe-tools/pa11y:latest
+    user: "${DDEV_UID}:${DDEV_GID}"
     networks: [default, ddev_default]
     restart: "no"
     command: sh -c "serve /home/aljibe/reports -p 9003 --no-clipboard 2>/dev/null & sleep infinity"
