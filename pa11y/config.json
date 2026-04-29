@@ -1,4 +1,5 @@
 {
+  "#ddev-generated": true,
   "chromeLaunchConfig": {
     "args": ["--no-sandbox"]
   },

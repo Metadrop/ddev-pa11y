@@ -12,12 +12,12 @@ services:
     environment:
       NODE_EXTRA_CA_CERTS: /mnt/ddev-global-cache/mkcert/rootCA.pem
       VIRTUAL_HOST: $DDEV_HOSTNAME
-      HTTP_EXPOSE: 9002:9038
-      HTTPS_EXPOSE: 9003:9038
+      HTTP_EXPOSE: 9202:9002
+      HTTPS_EXPOSE: 9203:9003
     volumes:
       - ${DDEV_APPROOT}/${PA11Y_TESTS_DIR:-tests/pa11y}:/home/aljibe/tests
-      - ${DDEV_APPROOT}/${PA11Y_CONFIG_FILE_PATH:-tests/pa11y/config.json}:/home/aljibe/config.json
-      - ${DDEV_APPROOT}/${PA11Y_CI_CONFIG_FILE_PATH:-tests/pa11y/pa11yci.json}:/home/aljibe/pa11yci.json
+      - ${DDEV_APPROOT}/${PA11Y_DEFAULT_CONFIG_FILE_PATH:-.ddev/pa11y/config.json}:/home/aljibe/config.json
+      - ${DDEV_APPROOT}/${PA11Y_DEFAULT_CI_CONFIG_FILE_PATH:-.ddev/pa11y/pa11yci.json}:/home/aljibe/.pa11yci.json
       - ${DDEV_APPROOT}/${PA11Y_REPORTS_PATH:-reports/pa11y}:/home/aljibe/reports
       - .:/mnt/ddev_config:ro
       - "ddev-global-cache:/mnt/ddev-global-cache"

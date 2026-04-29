@@ -6,23 +6,18 @@
 ## ExecRaw: true
 
 PA11Y_TESTS_PATH="/home/aljibe/tests"
+DEFAULT_ENV="${PA11Y_DEFAULT_ENV:-local}"
 
-if [ -z "$1" ]; then
-  echo "Usage: ddev pa11y-ci <environment|url> [args]"
-  echo "  environment: folder name inside tests/pa11y/ containing pa11yci.json"
-  echo "  url: URL to test directly"
+ENV="${1:-$DEFAULT_ENV}"
+if [ -d "$PA11Y_TESTS_PATH/$ENV" ] && [ -f "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" ]; then
+  [ -n "$1" ] && shift
+  pa11y-ci -c "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" "$@"
+elif [ -n "$1" ]; then
+  pa11y-ci "$@"
+else
+  echo "Usage: ddev pa11y-ci [environment|url] [args]"
   echo ""
   echo "Available environments:"
   find "$PA11Y_TESTS_PATH" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -I{} basename {}
-  echo ""
-  pa11y-ci
-  exit 0
-fi
-
-if [ -d "$PA11Y_TESTS_PATH/$1" ] && [ -f "$PA11Y_TESTS_PATH/$1/pa11yci.json" ]; then
-  ENV=$1
-  shift
-  pa11y-ci -c "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" "$@"
-else
-  pa11y-ci -c /home/aljibe/pa11yci.json "$@"
+  exit 1
 fi

@@ -1,4 +1,5 @@
 {
+  "#ddev-generated": true,
   "defaults": {
     "chromeLaunchConfig": {
       "args": ["--no-sandbox", "--ignore-certificate-errors"]
@@ -7,5 +8,5 @@
     "hideElements": ".skip-pa11y",
     "ignore": []
   },
-  "urls": []
+  "urls": ["https://web"]
 }

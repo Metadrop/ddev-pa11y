@@ -1,71 +1,133 @@
-[![tests](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
+[![tests](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-pa11y/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2030.svg)
 ![GitHub Release](https://img.shields.io/github/v/release/Metadrop/ddev-pa11y)
 
 # DDEV Pa11y add-on <!-- omit in toc -->
 
-* [What is DDEV Pa11y add-on?](#what-is-ddev-pa11y-add-on)
-* [Components of the repository](#components-of-the-repository)
-* [Getting started](#getting-started)
+- [What is DDEV Pa11y add-on?](#what-is-ddev-pa11y-add-on)
+- [Getting started](#getting-started)
+- [Available commands](#available-commands)
+- [Configuration](#configuration)
+  - [Single environment](#single-environment)
+  - [Multiple environments](#multiple-environments)
+- [Advanced config options](#advanced-config-options)
+- [Reports](#reports)
+- [Credits](#credits)
 
 ## What is DDEV Pa11y add-on?
+
 This repository provides a [DDEV](https://ddev.readthedocs.io) add-on for the Pa11y service. Pa11y is an automated accessibility testing tool that helps developers make their web applications more accessible.
 
-This is optimized for [Aljibe projects](https://github.com/Metadrop/Aljibe/), but can be used in any DDEV project.
-
-In DDEV, addons can be installed from the command line using the `ddev add-on get` command, for example, `ddev add-on get Metadrop/ddev-pa11y`.
-
-## Components of the repository
-
-* The fundamental contents of the Pa11y addon. For example, in this template there is a [docker-compose.pa11y.yaml](docker-compose.pa11y.yaml) file.
-* An [install.yaml](install.yaml) file that describes how to install the Pa11y service.
-* A test suite in [test.bats](tests/test.bats) that makes sure the Pa11y service continues to work as expected.
-* [Github actions setup](.github/workflows/tests.yml) so that the tests run automatically when you push to the repository.
+Supports single and multi-environment setups and works in any DDEV project.
 
 ## Getting started
 
-1. Install the Pa11y service in your DDEV project.
+1. Install the add-on:
 
-    For DDEV v1.23.5 or above run
+    For DDEV v1.23.5 or above:
 
     ```sh
     ddev add-on get Metadrop/ddev-pa11y
     ```
 
-    For earlier versions of DDEV run
+    For earlier versions:
 
     ```sh
     ddev get Metadrop/ddev-pa11y
     ```
 
-1. Start the DDEV project with `ddev start` or `ddev restart`if already started.
-1. Run the Pa11y service with `ddev pa11y http://metadrop.net --reporter=junit --standard WCAG2A`.
+2. Start the DDEV project with `ddev start` or `ddev restart` if already running.
 
-## Using a config file
+## Available commands
 
-The Pa11y configuration can be customised using the config file at `tests/pa11y/config.json`. The config is automatically used by all `ddev pa11y` commands. Example content:
+| Command                                    | Description                                                              |
+|--------------------------------------------|--------------------------------------------------------------------------|
+| `ddev pa11y [env\|url] [args]`             | Run pa11y against a single URL                                           |
+| `ddev pa11y-ci [env\|url] [args]`          | Run pa11y-ci against all configured URLs                                 |
+| `ddev pa11y-ci-report [env\|url] [args]`   | Run pa11y-ci and generate an HTML report in `reports/pa11y/<timestamp>/` |
+
+The first argument can be an environment name or a URL. If omitted, `local` is used by default (configurable via `PA11Y_DEFAULT_ENV`). If the first argument does not match a known environment, it is passed directly to pa11y-ci.
+
+## Configuration
+
+After installation, the following files and folders are created:
+
+```
+tests/pa11y/
+  local/
+    config.json       # pa11y config for the local environment
+    pa11yci.json      # pa11y-ci config for the local environment
+reports/pa11y/        # HTML reports output directory
+```
+
+There are two ways to manage configuration depending on whether you need multiple environments.
+
+### Single environment
+
+If you only need one configuration, edit the files in `tests/pa11y/local/` and run the commands without arguments:
+
+```sh
+ddev pa11y-ci
+ddev pa11y-ci-report
+```
+
+The `pa11yci.json` file lists the URLs to test and default options:
 
 ```json
 {
-  "chromeLaunchConfig": {
-    "args": ["--no-sandbox"]
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--ignore-certificate-errors"]
+    },
+    "ignoreHTTPSErrors": true,
+    "hideElements": ".skip-pa11y",
+    "ignore": []
   },
-  "ignoreHTTPSErrors": true,
-  "hideElements": ".skip-pa11y",
-  "ignore": [
-    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
+  "urls": ["https://web"]
+}
+```
+
+### Multiple environments
+
+For projects with multiple environments (local, staging, production...), create a folder per environment inside `tests/pa11y/`. Each folder must contain its own `pa11yci.json` (and optionally `config.json`):
+
+```
+tests/pa11y/
+  local/
+    config.json
+    pa11yci.json
+  staging/
+    pa11yci.json
+  production/
+    pa11yci.json
+```
+
+Run against a specific environment by passing its folder name:
+
+```sh
+ddev pa11y-ci local
+ddev pa11y-ci staging
+ddev pa11y-ci-report production
+```
+
+Each `pa11yci.json` defines the URLs and options for that environment:
+
+```json
+{
+  "defaults": {
+    "ignoreHTTPSErrors": true,
+    "hideElements": ".skip-pa11y",
+    "ignore": []
+  },
+  "urls": [
+    "https://staging.example.com",
+    "https://staging.example.com/contact"
   ]
 }
 ```
 
-### Advanced config file customisations
+## Advanced config options
 
-Several options available in the `pa11y` command can be configured in the config file, like:
-
-- `screenCapture`
-- `reporter`
-- `runner`
-
-Simply add them in your `config.json`:
+The `config.json` (used by `ddev pa11y`) supports additional pa11y options:
 
 ```json
 {
@@ -83,7 +145,11 @@ Simply add them in your `config.json`:
 }
 ```
 
-Please consult [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#configuration) to discover more.
+See the [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#configuration) and [pa11y-ci documentation](https://github.com/pa11y/pa11y-ci) for all available options.
+
+## Reports
+
+HTML reports generated by `ddev pa11y-ci-report` are saved to `reports/pa11y/<timestamp>/` and served automatically at `https://<project>.ddev.site:9203`.
 
 ## Credits
 
