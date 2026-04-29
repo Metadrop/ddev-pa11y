@@ -8,5 +8,6 @@
     "hideElements": ".skip-pa11y",
     "ignore": []
   },
+  "threshold": 0,
   "urls": ["https://web"]
 }
