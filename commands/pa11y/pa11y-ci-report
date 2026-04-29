@@ -25,6 +25,7 @@ else
   exit 1
 fi
 
+mkdir -p "$REPORT_DIR"
 TMP=$(mktemp /tmp/pa11yci-XXXXXX.json)
 
 node -e "
