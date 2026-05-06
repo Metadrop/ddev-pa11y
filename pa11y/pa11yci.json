@@ -9,5 +9,10 @@
     "ignore": []
   },
   "threshold": 0,
-  "urls": ["https://web"]
+  "urls": [
+    {
+      "url": "https://web",
+      "threshold": 0
+    }
+  ]
 }

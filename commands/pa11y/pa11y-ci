@@ -1,21 +1,66 @@
 #!/bin/sh
 #ddev-generated
 ## Description: Run pa11y-ci
-## Usage: pa11y-ci [environment|url] [args]
-## Example: "ddev pa11y-ci local" or "ddev pa11y-ci https://example.com"
+## Usage: pa11y-ci [environment|url] [--no-threshold] [args]
+## Example: "ddev pa11y-ci local" or "ddev pa11y-ci local --no-threshold" or "ddev pa11y-ci https://example.com"
 ## ExecRaw: true
 
 PA11Y_TESTS_PATH="/src/tests"
 DEFAULT_ENV="${PA11Y_DEFAULT_ENV:-local}"
 
+# Detect and strip --no-threshold from args
+NO_THRESHOLD=0
+FILTERED=""
+for arg in "$@"; do
+  if [ "$arg" = "--no-threshold" ]; then
+    NO_THRESHOLD=1
+  else
+    FILTERED="$FILTERED $arg"
+  fi
+done
+eval set -- $FILTERED
+
+strip_threshold() {
+  TMPCONFIG=$(mktemp /tmp/pa11yci-XXXXXX.json)
+  PA11Y_CONFIG_PATH="$1" python3 -c "
+import json, sys, os
+with open(os.environ['PA11Y_CONFIG_PATH']) as f:
+    c = json.load(f)
+c.pop('threshold', None)
+if isinstance(c.get('defaults'), dict):
+    c['defaults'].pop('threshold', None)
+for u in c.get('urls', []):
+    if isinstance(u, dict):
+        u.pop('threshold', None)
+sys.stdout.write(json.dumps(c))
+" > "$TMPCONFIG"
+  echo "$TMPCONFIG"
+}
+
+run_pa11y() {
+  CONFIG="$1"
+  shift
+  if [ "$NO_THRESHOLD" = "1" ]; then
+    TMPCONFIG=$(strip_threshold "$CONFIG")
+    pa11y-ci -c "$TMPCONFIG" "$@"
+    CODE=$?
+    rm -f "$TMPCONFIG"
+    exit $CODE
+  else
+    pa11y-ci -c "$CONFIG" "$@"
+  fi
+}
+
 ENV="${1:-$DEFAULT_ENV}"
 if [ -d "$PA11Y_TESTS_PATH/$ENV" ] && [ -f "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" ]; then
   [ -n "$1" ] && shift
-  pa11y-ci -c "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" "$@"
+  run_pa11y "$PA11Y_TESTS_PATH/$ENV/pa11yci.json" "$@"
 elif [ -n "$1" ]; then
   pa11y-ci "$@"
 else
-  echo "Usage: ddev pa11y-ci [environment|url] [args]"
+  echo "Usage: ddev pa11y-ci [environment|url] [--no-threshold] [args]"
+  echo ""
+  echo "  --no-threshold    Ignore the configured threshold and report all errors"
   echo ""
   echo "Available environments:"
   find "$PA11Y_TESTS_PATH" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -I{} basename {}
