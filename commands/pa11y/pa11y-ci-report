@@ -28,16 +28,19 @@ fi
 mkdir -p "$REPORT_DIR"
 TMP=$(mktemp /tmp/pa11yci-XXXXXX.json)
 
-node -e "
-  const fs = require('fs');
-  const cfg = '$CONFIG_FILE' ? JSON.parse(fs.readFileSync('$CONFIG_FILE', 'utf8')) : {};
-  cfg.defaults = cfg.defaults || {};
-  cfg.defaults.reporters = [['pa11y-ci-reporter-html', { destination: '$REPORT_DIR' }]];
-  delete cfg.defaults.threshold;
-  fs.writeFileSync('$TMP', JSON.stringify(cfg));
-"
+{ [ -n "$CONFIG_FILE" ] && cat "$CONFIG_FILE" || echo '{}'; } \
+  | jq --arg dest "$REPORT_DIR" '
+      .defaults //= {} |
+      .defaults.reporters = [
+        "/usr/lib/node_modules/pa11y-ci/lib/reporters/cli.js",
+        ["pa11y-ci-reporter-html", {"destination": $dest}]
+      ] |
+      del(.defaults.threshold)
+    ' > "$TMP"
 
 pa11y-ci -c "$TMP" "$@"
+EXIT_CODE=$?
 rm -f "$TMP"
 
 echo "HTML report saved to ${PA11Y_REPORTS_PATH:-reports/pa11y}/$FOLDER/"
+exit $EXIT_CODE
