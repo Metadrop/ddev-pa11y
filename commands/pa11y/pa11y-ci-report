@@ -33,7 +33,7 @@ TMP=$(mktemp /tmp/pa11yci-XXXXXX.json)
       .defaults //= {} |
       .defaults.reporters = [
         "/usr/lib/node_modules/pa11y-ci/lib/reporters/cli.js",
-        ["pa11y-ci-reporter-html", {"destination": $dest}]
+        ["pa11y-ci-reporter-html", {"destination": $dest, "reportAllIssues": true}]
       ] |
       del(.defaults.threshold)
     ' > "$TMP"
