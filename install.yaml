@@ -15,4 +15,4 @@ post_install_actions:
   - test -f ${DDEV_APPROOT}/tests/pa11y/local/config.json || cp pa11y/config.json ${DDEV_APPROOT}/tests/pa11y/local/config.json
   - test -f ${DDEV_APPROOT}/tests/pa11y/local/pa11yci.json || cp pa11y/pa11yci.json ${DDEV_APPROOT}/tests/pa11y/local/pa11yci.json
   - echo "Install finished. Please restart ddev with 'ddev restart'"
- - echo "If you need to set a custom version, add PA11Y_VERSION=<version>-base<base> in .ddev/.env (e.g. PA11Y_VERSION=9.1.1-base1.0.0)"
+  - echo "If you need to set a custom version, add PA11Y_VERSION=<version>-base<base> in .ddev/.env (e.g. PA11Y_VERSION=9.1.1-base1.0.0)"
