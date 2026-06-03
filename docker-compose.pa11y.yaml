@@ -5,11 +5,11 @@ services:
     build:
       context: './pa11yBuild'
       args:
-        BASE_IMAGE: ghcr.io/metadrop/aljibe-tools/pa11y:latest
+        BASE_IMAGE: ghcr.io/metadrop/aljibe-tools/pa11y:${PA11Y_VERSION:-9.1.1-base1.0.0}
         username: $USER
         uid: $DDEV_UID
         gid: $DDEV_GID
-    image: ghcr.io/metadrop/aljibe-tools/pa11y:latest-${DDEV_SITENAME}-built
+    image: ghcr.io/metadrop/aljibe-tools/pa11y:${PA11Y_VERSION:-9.1.1-base1.0.0}-${DDEV_SITENAME}-built
     user: '$DDEV_UID:$DDEV_GID'
     networks: [default, ddev_default]
     restart: "no"
